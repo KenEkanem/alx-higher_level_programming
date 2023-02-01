@@ -1,1 +1,2 @@
-# 0x08-python-more_classes
+# :snake:
+0x08. Python - More Classes and Objects
