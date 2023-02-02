@@ -1,0 +1,30 @@
+
+def test_add_integer():
+    # Test for integers as inputs
+    assert add_integer(2, 3) == 5
+    assert add_integer(0, 0) == 0
+    assert add_integer(-1, 1) == 0
+    
+    # Test for floats as inputs
+    assert add_integer(2.0, 3) == 5
+    assert add_integer(0.0, 0) == 0
+    assert add_integer(-1.0, 1) == 0
+    
+    # Test for a default value of b
+    assert add_integer(2) == 100
+    
+    # Test for TypeError exceptions
+    try:
+        add_integer("2", 3)
+    except TypeError as e:
+        assert str(e) == "a must be an integer"
+    try:
+        add_integer(2, "3")
+    except TypeError as e:
+        assert str(e) == "b must be an integer"
+    try:
+        add_integer("2", "3")
+    except TypeError as e:
+        assert str(e) == "a must be an integer"
+
+test_add_integer()
