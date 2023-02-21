@@ -1,45 +1,74 @@
 #!/usr/bin/python3
-"""Square that inherits from rectangle"""
+"""
+    contains class Square implements class Rectangle
+"""
 from models.rectangle import Rectangle
 
 
 class Square(Rectangle):
-    """Initializer"""
-
+    """
+        Square implements rectangle
+    """
     def __init__(self, size, x=0, y=0, id=None):
+        """
+            initialises Square (overrides Rectangle init)
+        """
         super().__init__(size, size, x, y, id)
-        self.size = self.width
 
     @property
     def size(self):
-        """get property"""
+        """
+            returns the size of the square
+        """
         return self.width
 
     @size.setter
     def size(self, value):
-        """set value"""
-        self.height = value
-        self.width = value
+        """
+            sets the value of size
+        """
+        if type(value) != int:
+            raise TypeError("width must be an integer")
+        if value <= 0:
+            raise ValueError("width must be > 0")
 
-    def __str__(self):
-        return "[Square] ({}) {}/{} - {}".format(self.id, self.x, self.y, self.size)
+        self.width = value
+        self.height = value
 
     def update(self, *args, **kwargs):
-        """update the class square"""
-        attribute = ["id", "size", "x", "y"]
-        i = 0
+        """
+            assigns key/value argument to attributes
+            kwargs is skipped if args is not empty
+            Args:
+                *args -  variable number of no-keyword args
+                **kwargs - variable number of keyworded args
+        """
+        if len(args) == 0:
+            for key, val in kwargs.items():
+                self.__setattr__(key, val)
+            return
 
-        if args is not None and len(args) > 0:
-            for arg in args:
-                if i < 4:
-                    setattr(self, attribute[i], arg)
-                    i += 1
+        try:
+            self.id = args[0]
+            self.size = args[1]
+            self.x = args[2]
+            self.y = args[3]
+        except IndexError:
+            pass
 
-        elif (kwargs is not None):
-            for key, value in kwargs.items():
-                setattr(self, key, value)
+    def __str__(self):
+        """
+            Overloading str function
+        """
+        return "[{}] ({}) {}/{} - {}".format(type(self).__name__,
+                                             self.id, self.x, self.y,
+                                             self.width)
 
     def to_dictionary(self):
-        """return a dictionary of square sign"""
-
-        return ({'id': self.id, 'x': self.x, 'size': self.size, 'y': self.y, })
+        """
+            Returns the dictionary representation of a Square
+        """
+        return {'id': getattr(self, "id"),
+                'size': getattr(self, "width"),
+                'x': getattr(self, "x"),
+                'y': getattr(self, "y")}
