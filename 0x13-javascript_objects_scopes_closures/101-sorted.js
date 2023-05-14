@@ -1,10 +1,20 @@
 #!/usr/bin/node
-const dict = require('./101-data.js').dict;
+
+const dict = require('./101-data').dict;
+
+const totalList = Object.entries(dict);
+const valueList = Object.values(dict);
+const uniqueValue = [...new Set(valueList)];
 const newDict = {};
-for (const key in dict) {
-  if (newDict[dict[key]] === undefined) {
-    newDict[dict[key]] = [];
+
+for (const j in uniqueValue) {
+  const list = [];
+  for (const k in totalList) {
+    if (totalList[k][1] === uniqueValue[j]) {
+      list.unshift(totalList[k][0]);
+    }
   }
-  newDict[dict[key]].push(key);
+  newDict[uniqueValue[j]] = list;
 }
+
 console.log(newDict);
